@@ -1,11 +1,21 @@
 defmodule FeedReader do
 
+  use GenServer
+
   alias FeedReader.Feed
 
   @feed_uris [
     "http://rss.cnn.com/rss/cnn_topstories.rss",
     "http://stackoverflow.com/feeds"
   ]
+
+  def start_link(args, opts \\ []) do
+    GenServer.start_link(__MODULE__, args, opts)
+  end
+
+  def init(args) do
+    {:ok, %{feeds: %{}, finished: false}}
+  end
 
   def read do
     feeds = Enum.map(@feed_uris, fn(uri) ->
