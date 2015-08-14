@@ -17,14 +17,18 @@ defmodule FeedReader do
     {:ok, %{feeds: %{}, finished: false}}
   end
 
-  def read do
+  def read(feed_reader) do
+    GenServer.call(feed_reader, :read, 10_000)
+  end
+
+  def handle_call(:read, from, state) do
     feeds = Enum.map(@feed_uris, fn(uri) ->
               pid = spawn(Feed, :get, [self, uri])
               {pid, %Feed{pid: pid, uri: uri}}
             end)
             |> Enum.into(%{})
 
-    listen(feeds)
+    {:reply, :ok, %{state | feeds: feeds}}
   end
 
   defp listen(feeds) do
