@@ -31,30 +31,24 @@ defmodule FeedReader do
     {:reply, :ok, %{state | feeds: feeds}}
   end
 
-  def handle_info(msg, state) do
-    IO.inspect msg
-    {:noreply, state}
+  def handle_info({:feed_length, from, length}, state) do
+    %{feeds: feeds} = state
+
+    feeds = update_feed(feeds, from, {:length, length})
+
+    if finished = finished?(feeds), do: present_results(feeds)
+
+    {:noreply, %{state | feeds: feeds, finished: finished}}
   end
 
-  defp listen(feeds) do
-    receive do
-      {:feed_length, from, length} ->
-        feeds = update_feed(feeds, from, {:length, length})
+  def handle_info({:feed_titles, from, titles}, state) do
+    %{feeds: feeds} = state
 
-        if finished?(feeds) do
-          present_results(feeds)
-        else
-          listen(feeds)
-        end
-      {:feed_titles, from, titles} ->
-        feeds = update_feed(feeds, from, {:titles, titles})
+    feeds = update_feed(feeds, from, {:titles, titles})
 
-        if finished?(feeds) do
-          present_results(feeds)
-        else
-          listen(feeds)
-        end
-    end
+    if finished = finished?(feeds), do: present_results(feeds)
+
+    {:noreply, %{state | feeds: feeds, finished: finished}}
   end
 
   defp finished?(feeds) do
