@@ -31,6 +31,11 @@ defmodule FeedReader do
     {:reply, :ok, %{state | feeds: feeds}}
   end
 
+  def handle_info(msg, state) do
+    IO.inspect msg
+    {:noreply, state}
+  end
+
   defp listen(feeds) do
     receive do
       {:feed_length, from, length} ->
