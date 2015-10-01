@@ -25,6 +25,8 @@ defmodule DnsServer.UdpAcceptor do
   def handle_info( {:udp, socket, from_ip, from_port, msg}, state ) do
     Logger.info "Received UDP message"
 
+    :gen_udp.send(socket, from_ip, from_port, msg)
+
     {:noreply, state}
   end
 
