@@ -11,6 +11,8 @@ defmodule PlugAuth.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    plug PlugLogger.Authentication
   end
 
   scope "/", PlugAuth do
