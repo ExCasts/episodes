@@ -12,11 +12,15 @@ defmodule PlugLogger.Authentication do
       :authorized ->
         conn
       :unauthorized ->
-        conn
-        |> put_status( :unauthorized )
-        |> json( %{error: %{message: "Authentication failure"}} )
-        |> halt
+        render_unauthorized( conn )
     end
+  end
+
+  defp render_unauthorized( conn ) do
+    conn
+    |> put_status( :unauthorized )
+    |> json( %{error: %{message: "Authentication failure"}} )
+    |> halt
   end
 
   defp authorize( conn ) do
