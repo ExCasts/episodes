@@ -8,12 +8,17 @@ defmodule PlugLogger.Authentication do
   def init( options ), do: options
 
   def call( conn, _options ) do
-    case authorize( conn ) do
-      :authorized ->
-        conn
-      :unauthorized ->
-        render_unauthorized( conn )
-    end
+    conn
+    |> authorize
+    |> handle_authorize( conn )
+  end
+
+  defp handle_authorize( :authorized, conn ) do
+    conn
+  end
+
+  defp handle_authorize( :unauthorized, conn ) do
+    render_unauthorized( conn )
   end
 
   defp render_unauthorized( conn ) do
