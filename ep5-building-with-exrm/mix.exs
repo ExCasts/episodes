@@ -11,7 +11,7 @@ defmodule Test.Mixfile do
   # Configuration for the OTP application
   def application do
     [mod: { Test, [] },
-     applications: [:logger, :timex]]
+     applications: [:logger]]
   end
 
   # Returns the list of dependencies in the format:
