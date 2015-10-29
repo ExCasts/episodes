@@ -21,7 +21,8 @@ defmodule Test.Mixfile do
   # { :barbat, "~> 0.1", github: "elixir-lang/barbat" }
   defp deps do
     [
-      {:timex, "~> 0.15"}
+      {:timex, "~> 0.15"},
+      {:exrm, "~> 0.19"}
     ]
   end
 end
