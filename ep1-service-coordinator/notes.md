@@ -6,7 +6,7 @@
 * Ensures best practices developed over years of Erlang system implementations
 
 
-# When should I Use a GenServer?
+# When Should I Use a GenServer?
 
-Anytime you need to employ an Elixir process and a higher level abstraction (ie.
-GenEvent, Agent, Task, etc) you should consider using the GenServer behavior
+Anytime you need to employ a long-lived Elixir process and a higher level abstraction (ie.
+GenEvent, Agent, Task, etc) you should consider using the GenServer behavior.
