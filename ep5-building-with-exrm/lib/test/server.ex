@@ -17,6 +17,6 @@ defmodule Test.Server do
 
   def handle_call(:hello, _from, state) do
     Logger.info "call hello"
-    {:reply, "world", state}
+    {:reply, "world!", state}
   end
 end
